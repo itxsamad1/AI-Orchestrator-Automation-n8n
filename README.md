@@ -8,7 +8,7 @@ This n8n workflow intelligently **routes user queries to the most suitable large
 
 The automation dynamically routes requests to specialized AI models based on content type, optimizing response quality and efficiency while using free models through the OpenRouter API.
 
-**Developed by:** [Abdul Samad](https://github.com/itxsamad1) (itxsamad@github.com)
+**Developed by:** [Abdul Samad](https://github.com/itxsamad1) 
 
 ## Features
 
