@@ -1,0 +1,436 @@
+{
+  "name": "AI Orchestrator Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "38ad57df-8372-40f2-b1dd-1eb4ea417912",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        0,
+        304
+      ],
+      "webhookId": "56b65a7f-0698-4e99-81eb-fd87e0cb5bfa",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "returnIntermediateSteps": true
+        }
+      },
+      "id": "5879e782-3354-40cd-8cba-cd87079b4043",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        832,
+        304
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "numberInputs": 4,
+        "rules": {
+          "rule": [
+            {
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "976d83bb-7e9e-4aab-9722-25a9e238164f",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.request_type }}",
+                    "rightValue": "coding"
+                  }
+                ]
+              }
+            },
+            {
+              "modelIndex": 2,
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "1e68688d-73fe-47c1-9b35-a1e226220bcd",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.request_type }}",
+                    "rightValue": "reasoning"
+                  }
+                ]
+              }
+            },
+            {
+              "modelIndex": 3,
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "61d58197-db59-4cd7-bc41-bbeaf5e7b069",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.request_type }}",
+                    "rightValue": "general"
+                  }
+                ]
+              }
+            },
+            {
+              "modelIndex": 4,
+              "conditions": {
+                "options": {
+                  "version": 2,
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "fca2ec99-fd1d-458f-9919-73bfbba55c4f",
+                    "operator": {
+                      "name": "filter.operator.equals",
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "leftValue": "={{ $json.output.request_type }}",
+                    "rightValue": "search"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "id": "81108e85-d63f-4939-93f3-8b81096e5b79",
+      "name": "Model Selector",
+      "type": "@n8n/n8n-nodes-langchain.modelSelector",
+      "position": [
+        720,
+        528
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"request_type\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t}\n}"
+      },
+      "id": "1fd2a9a2-6f7a-45b4-a33a-5757005bd621",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        384,
+        528
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('When chat message received').item.json.sessionId }}"
+      },
+      "id": "c40d1a21-bb04-4749-be94-a2e299789adb",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        1040,
+        528
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Il tuo compito è classificare il tipo di richiesta che ricevi in input.\nCome output devi dare:\n- general: se si tratta di una richiesta generale\n- reasoning: se si tratta di una richiesta di ragionamento\n- coding: se si tratta di una richiesta relativa allo sviluppo di codice\n- google: se si tratta di una richiesta che prevede l'utilizzo di strumenti google"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "id": "5d6581a4-308c-421b-b69d-548b2fc180f3",
+      "name": "Request Type",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        224,
+        304
+      ],
+      "typeVersion": 1.7
+    },
+    {
+      "parameters": {
+        "content": "## AI Orchestrator: dynamically Selects Models Based on Input Type, and it uses free models using OpenRouter API Key\n\nThis workflow is designed to intelligently **route user queries to the most suitable large language model (LLM)** based on the type of request received in a chat environment. It uses structured classification and model selection to optimize both performance and cost-efficiency in AI-driven conversations.\n\nIt dynamically routes requests to specialized AI models based on content type, optimizing response quality and efficiency\n\nDeveloped by Abdul Samad (itxsamad@github.com)",
+        "height": 320,
+        "width": 624
+      },
+      "id": "c16937bc-b8f5-4f1b-81bb-7b0a6b65baba",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        -48
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-8b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        256,
+        528
+      ],
+      "id": "aac13c50-4c75-4e09-bbd5-d8cf68683368",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "AH0Oc4pQ6yCtW9Lm",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-coder",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        624,
+        736
+      ],
+      "id": "c8c5867b-8e52-4ca5-b77d-c8277f9ad76a",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "AH0Oc4pQ6yCtW9Lm",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat-v3-0324:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        752,
+        736
+      ],
+      "id": "022f6e40-33c3-4635-93dd-6d402e598998",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "AH0Oc4pQ6yCtW9Lm",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "meta-llama/llama-3.3-70b-instruct:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        736
+      ],
+      "id": "19b9b550-815f-4f91-8d49-1e1d1387e29f",
+      "name": "OpenRouter Chat Model4",
+      "credentials": {
+        "openRouterApi": {
+          "id": "AH0Oc4pQ6yCtW9Lm",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "moonshotai/kimi-dev-72b:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        880,
+        736
+      ],
+      "id": "53a352c6-f24d-4073-a4cb-84bc91bc2b68",
+      "name": "OpenRouter Chat Model3",
+      "credentials": {
+        "openRouterApi": {
+          "id": "AH0Oc4pQ6yCtW9Lm",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Request Type": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Model Selector": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Request Type",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Request Type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Request Type",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Model Selector",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Model Selector",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Model Selector",
+            "type": "ai_languageModel",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Model Selector",
+            "type": "ai_languageModel",
+            "index": 2
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c9393332-51af-4623-9958-3ccabe7f46be",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ca55508843c60dbc6f51f19d37c63829f05c0672e69549273c950662e3b88673"
+  },
+  "id": "9yrx2uYk9K1U0iTe",
+  "tags": []
+}
