@@ -4,17 +4,10 @@
   
 [![Typing SVG](https://readme-typing-svg.demolab.com?font=Fira+Code&size=20&duration=3000&pause=1000&color=00D9FF&center=true&vCenter=true&width=700&lines=Intelligent+AI+Model+Routing+System;Dynamic+LLM+Selection+Automation;Cost-Efficient+Multi-Model+Orchestration;Real-time+Request+Classification)](https://git.io/typing-svg)
 
+
 <img src="https://komarev.com/ghpvc/?username=itxsamad1&repo=AI-Orchestrator-Automation-n8n&color=00D9FF&style=for-the-badge&label=Repository+Views" alt="Repository Views"/>
 
 </div>
-
-```ascii
-                    ╔══════════════════════════════════════════════════════════════╗
-                    ║               AI ORCHESTRATOR AUTOMATION                     ║
-                    ║           Intelligent Model Selection System                 ║
-                    ║              n8n Workflow Automation                         ║
-                    ╚══════════════════════════════════════════════════════════════╝
-```
 
 <div align="center">
   <img src="image.png" alt="AI Orchestrator Workflow" width="80%" style="border-radius: 10px; box-shadow: 0 8px 16px rgba(0,0,0,0.3);" />
@@ -562,4 +555,5 @@ git push origin feature/enhancement-name
   <b>Built with ❤️ by <a href="https://github.com/itxsamad1">Abdul Samad</a> | Senior Backend Engineer & AI Researcher</b>
 </div>
 
+<br>
 **💡 Note**: This automation optimizes cost-efficiency through free-tier model utilization. For production environments, consider upgrading to premium models for enhanced performance and reliability.
