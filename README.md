@@ -556,4 +556,4 @@ git push origin feature/enhancement-name
 </div>
 
 <br>
-**💡 Note**: This automation optimizes cost-efficiency through free-tier model utilization. For production environments, consider upgrading to premium models for enhanced performance and reliability.
+💡 <b>Note</b>: This automation optimizes cost-efficiency through free-tier model utilization. For production environments, consider upgrading to premium models for enhanced performance and reliability.
